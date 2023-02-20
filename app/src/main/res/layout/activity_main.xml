@@ -24,7 +24,7 @@
             tools:ignore="ContentDescription" />
 
         <RadioGroup
-            android:id="@+id/rg_sexe"
+            android:id="@+id/rg_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +34,7 @@
             android:layout_marginTop="5dp">
 
             <RadioButton
-                android:id="@+id/rb_homme"
+                android:id="@+id/rb_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Homme"
@@ -42,7 +42,7 @@
                 tools:ignore="HardcodedText" />
 
             <RadioButton
-                android:id="@+id/rb_femme"
+                android:id="@+id/rb_woman"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Femme"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/img_avatar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rg_sexe"
+            app:layout_constraintTop_toBottomOf="@id/rg_gender"
             android:layout_marginTop="25dp"
             android:minWidth="200dp">
             <com.google.android.material.textfield.TextInputEditText
@@ -89,7 +89,7 @@
                 tools:ignore="HardcodedText" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <EditText
             android:id="@+id/til_birthday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,20 +97,17 @@
             android:minWidth="260dp"
             app:layout_constraintTop_toBottomOf="@id/til_firstname"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_birthday"
-                android:inputType="date"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Date d'anniversaire"
-                tools:ignore="HardcodedText" />
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintEnd_toEndOf="parent"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="Date d'anniversaire"
+            android:importantForAutofill="no"
+            tools:ignore="HardcodedText" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_tel"
+            android:id="@+id/til_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
@@ -119,7 +116,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_tel"
+                android:id="@+id/tiet_phone"
                 android:inputType="phone"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
@@ -135,7 +132,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:minWidth="260dp"
-            app:layout_constraintTop_toBottomOf="@id/til_tel"
+            app:layout_constraintTop_toBottomOf="@id/til_phone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
             <com.google.android.material.textfield.TextInputEditText
@@ -150,7 +147,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_pc"
+            android:id="@+id/til_zipcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
@@ -159,7 +156,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_pc"
+                android:id="@+id/tiet_zipcode"
                 android:inputType="number"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
@@ -170,16 +167,16 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_adress"
+            android:id="@+id/til_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:minWidth="260dp"
-            app:layout_constraintTop_toBottomOf="@id/til_pc"
+            app:layout_constraintTop_toBottomOf="@id/til_zipcode"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_adress"
+                android:id="@+id/tiet_address"
                 android:inputType="textPostalAddress"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
@@ -196,11 +193,10 @@
             android:layout_marginTop="25dp"
             android:width="320dp"
             android:hint="VALIDER"
-            android:onClick="sendMessage"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_adress"
+            app:layout_constraintTop_toBottomOf="@+id/til_address"
+            android:layout_marginBottom="20dp"
             tools:ignore="HardcodedText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

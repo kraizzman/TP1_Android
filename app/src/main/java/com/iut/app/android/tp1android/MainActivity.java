@@ -22,7 +22,6 @@ import java.util.Calendar;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-
     public static final String INPUT_NAME = "input_name";
     public static final String INPUT_FIRSTNAME = "input_firstname";
     public static final String INPUT_BIRTHDATE = "input_birthdate";
@@ -37,21 +36,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         editText=(EditText) findViewById(R.id.et_birthday);
-        DatePickerDialog.OnDateSetListener date =new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int day) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH,month);
-                myCalendar.set(Calendar.DAY_OF_MONTH,day);
-                updateLabel();
-            }
+        DatePickerDialog.OnDateSetListener date = (view, year, month, day) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH,month);
+            myCalendar.set(Calendar.DAY_OF_MONTH,day);
+            updateLabel();
         };
-        editText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new DatePickerDialog(MainActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
+        editText.setOnClickListener(view -> new DatePickerDialog(MainActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show());
     }
 
     private void updateLabel(){
@@ -106,28 +97,28 @@ public class MainActivity extends AppCompatActivity {
         String message5 = editTextMail.getText().toString();
         String message6 = editTextZipCode.getText().toString();
         String message7 = editTextAddress.getText().toString();
-        if ( ( message1.equals("")) )
+        if (message1.equals(""))
         {
             Toast.makeText(getApplicationContext(), "Nom manquant !", Toast.LENGTH_SHORT).show();
             return;
         }
-        if ( ( message2.equals("")) )
+        if (message2.equals(""))
         {
             Toast.makeText(getApplicationContext(), "Prénom manquant !", Toast.LENGTH_SHORT).show();
             return;
         }
-        if ( ( message4.equals("")) )
+        if (message4.equals(""))
         {
             Toast.makeText(getApplicationContext(), "Téléphone manquant !", Toast.LENGTH_SHORT).show();
             return;
         }
-        intent.putExtra(EXTRA_MESSAGE, message1);
-        intent.putExtra(EXTRA_MESSAGE, message2);
-        intent.putExtra(EXTRA_MESSAGE, message3);
-        intent.putExtra(EXTRA_MESSAGE, message4);
-        intent.putExtra(EXTRA_MESSAGE, message5);
-        intent.putExtra(EXTRA_MESSAGE, message6);
-        intent.putExtra(EXTRA_MESSAGE, message7);
+        intent.putExtra(INPUT_NAME, message1);
+        intent.putExtra(INPUT_FIRSTNAME, message2);
+        intent.putExtra(INPUT_BIRTHDATE, message3);
+        intent.putExtra(INPUT_PHONE, message4);
+        intent.putExtra(INPUT_MAIL, message5);
+        intent.putExtra(INPUT_ZIPCODE, message6);
+        intent.putExtra(INPUT_ADDRESS, message7);
         startActivity(intent);
     }
 }

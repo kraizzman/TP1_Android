@@ -41,9 +41,7 @@ public class ListActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
-            // Récupérer le contact sélectionné
-            User contact = (User) parent.getItemAtPosition(position);
-
+            Intent intent = new Intent(ListActivity.this, DisplayData.class);
         });
 
         listView.setOnItemLongClickListener((parent, view, position, id) -> {

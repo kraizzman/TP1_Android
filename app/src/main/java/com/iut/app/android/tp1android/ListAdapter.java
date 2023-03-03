@@ -52,7 +52,7 @@ public class ListAdapter extends BaseAdapter {
         TextView tv2 = (TextView) layout.findViewById(R.id.tv_firstname);
 
         tv.setText(contacts.get(position).getName());
-        tv.setText(contacts.get(position).getFirstName());
+        tv2.setText(contacts.get(position).getFirstName());
 
         return layout;
     }

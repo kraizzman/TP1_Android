@@ -1,27 +1,28 @@
 package com.iut.app.android.tp1android;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.google.android.material.textfield.TextInputLayout;
+import com.iut.app.android.tp1android.Model.ListContacts;
+import com.iut.app.android.tp1android.Model.UserData;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String INPUT_GENDER = "input_gender";
     public static final String INPUT_NAME = "input_name";
     public static final String INPUT_FIRSTNAME = "input_firstname";
     public static final String INPUT_BIRTHDATE = "input_birthdate";
@@ -29,26 +30,41 @@ public class MainActivity extends AppCompatActivity {
     public static final String INPUT_MAIL = "input_mail";
     public static final String INPUT_ZIPCODE = "input_zipcode";
     public static final String INPUT_ADDRESS = "input_address";
+
+    private EditText nameEditText, firstNameEditText, birthdateEditText, phoneEditText, mailEditText, postalCodeEditText, cityEditText;
+    private RadioGroup genderRadioGroup;
+    private RadioButton maleRadioButton, femaleRadioButton;
     final Calendar myCalendar= Calendar.getInstance();
-    private EditText editText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        editText=(EditText) findViewById(R.id.et_birthday);
+
+        genderRadioGroup = findViewById(R.id.rg_gender);
+        maleRadioButton = findViewById(R.id.rb_male);
+        femaleRadioButton = findViewById(R.id.rb_woman);
+        nameEditText = findViewById(R.id.tiet_name);
+        firstNameEditText = findViewById(R.id.tiet_firstname);
+        phoneEditText = findViewById(R.id.tiet_phone);
+        mailEditText = findViewById(R.id.tiet_mail);
+        postalCodeEditText = findViewById(R.id.tiet_zipcode);
+        cityEditText = findViewById(R.id.tiet_address);
+
+        birthdateEditText= findViewById(R.id.et_birthday);
         DatePickerDialog.OnDateSetListener date = (view, year, month, day) -> {
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH,month);
             myCalendar.set(Calendar.DAY_OF_MONTH,day);
             updateLabel();
         };
-        editText.setOnClickListener(view -> new DatePickerDialog(MainActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show());
+        birthdateEditText.setOnClickListener(view -> new DatePickerDialog(MainActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show());
     }
 
     private void updateLabel(){
         String myFormat="dd/MM/yy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.FRANCE);
-        editText.setText(dateFormat.format(myCalendar.getTime()));
+        birthdateEditText.setText(dateFormat.format(myCalendar.getTime()));
     }
 
     @Override
@@ -82,43 +98,49 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendInputData(View view) {
-        Intent intent = new Intent(this, DisplayInputData.class);
-        EditText editTextName = (EditText) findViewById(R.id.tiet_name);
-        EditText editTextFirstName = (EditText) findViewById(R.id.tiet_firstname);
-        EditText editTextBirthDate = (EditText) findViewById(R.id.et_birthday);
-        EditText editTextPhone = (EditText) findViewById(R.id.tiet_phone);
-        EditText editTextMail = (EditText) findViewById(R.id.tiet_mail);
-        EditText editTextZipCode = (EditText) findViewById(R.id.tiet_zipcode);
-        EditText editTextAddress = (EditText) findViewById(R.id.tiet_address);
-        String message1 = editTextName.getText().toString();
-        String message2 = editTextFirstName.getText().toString();
-        String message3 = editTextBirthDate.getText().toString();
-        String message4 = editTextPhone.getText().toString();
-        String message5 = editTextMail.getText().toString();
-        String message6 = editTextZipCode.getText().toString();
-        String message7 = editTextAddress.getText().toString();
-        if (message1.equals(""))
+        Intent intent = new Intent(this, ListActivity.class);
+
+        String gender = "";
+        String name = nameEditText.getText().toString().trim();
+        String firstName = firstNameEditText.getText().toString().trim();
+        String birthdate = birthdateEditText.getText().toString().trim();
+        String phoneNumber = phoneEditText.getText().toString().trim();
+        String mail = mailEditText.getText().toString().trim();
+        String postalCode = postalCodeEditText.getText().toString().trim();
+        String city = cityEditText.getText().toString().trim();
+
+        int selectedGenderId = genderRadioGroup.getCheckedRadioButtonId();
+        if (selectedGenderId == maleRadioButton.getId()) {
+            gender = "Masculin";
+        } else if (selectedGenderId == femaleRadioButton.getId()) {
+            gender = "Féminin";
+        }
+
+        if (firstName.equals(""))
         {
             Toast.makeText(getApplicationContext(), "Nom manquant !", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (message2.equals(""))
+        if (name.equals(""))
         {
             Toast.makeText(getApplicationContext(), "Prénom manquant !", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (message4.equals(""))
+        if (phoneNumber.equals(""))
         {
             Toast.makeText(getApplicationContext(), "Téléphone manquant !", Toast.LENGTH_SHORT).show();
             return;
         }
-        intent.putExtra(INPUT_NAME, message1);
-        intent.putExtra(INPUT_FIRSTNAME, message2);
-        intent.putExtra(INPUT_BIRTHDATE, message3);
-        intent.putExtra(INPUT_PHONE, message4);
-        intent.putExtra(INPUT_MAIL, message5);
-        intent.putExtra(INPUT_ZIPCODE, message6);
-        intent.putExtra(INPUT_ADDRESS, message7);
+
+        intent.putExtra(INPUT_GENDER, gender);
+        intent.putExtra(INPUT_NAME, name);
+        intent.putExtra(INPUT_FIRSTNAME, firstName);
+        intent.putExtra(INPUT_BIRTHDATE, birthdate);
+        intent.putExtra(INPUT_PHONE, phoneNumber);
+        intent.putExtra(INPUT_MAIL, mail);
+        intent.putExtra(INPUT_ZIPCODE, postalCode);
+        intent.putExtra(INPUT_ADDRESS, city);
+
         startActivity(intent);
     }
 }

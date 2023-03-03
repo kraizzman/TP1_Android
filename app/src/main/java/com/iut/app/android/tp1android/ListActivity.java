@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -48,8 +49,28 @@ public class ListActivity extends AppCompatActivity {
                                      intent.getStringExtra(MainActivity.INPUT_ADDRESS));
 
         contacts.addContact(user);
+        items.add("Johan Gagean");
+        items.add("Fabien Gouin");
+        items.add("Albert Bélanger");
+        items.add("Isaac Boudreaux");
+        items.add("Léon Courbis");
+        items.add("Quentin Dubos");
+        items.add("Bastien Vandame");
         items.add(user.getFirstName() + " " + user.getName());
 
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            // Récupérer le contact sélectionné
+            UserData contact = (UserData) parent.getItemAtPosition(position);
+
+        });
+
+        listView.setOnItemLongClickListener((parent, view, position, id) -> {
+            // Récupérer le contact sélectionné
+            UserData contact = (UserData) parent.getItemAtPosition(position);
+            // Supprimer le contact
+            items.remove(contact);
+            return true;
+        });
         fbAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
